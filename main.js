@@ -5,6 +5,9 @@
 // delete버튼을 누르면 할일이 삭제된다.
 
 // check버튼을 누르면 할일이 끝나면서 밑줄이 간다.
+// 1. check 버튼을 클릭하는 순간 .true 를 false 로 바꿔준다.
+// 2. true이면 끝난걸로 간주하고 밑줄 보여주기
+// 3. false이면 안끝난걸로 간주하고 그대로
 
 // 진행중 끝남 탭을 누르면, 언더바가 이동한다.
 
@@ -34,9 +37,15 @@ deleteButton.addEventListener("click",dell);
 
 function plus(){
 
+    
+    
+    let task ={
+        id : randomID(),
+        taskContent : userList.value,
+        isComplete:false
+    }
 
-    let userValue = userList.value
-        taskList.push(userValue)    // 값이 리스크에 담긴다.
+        taskList.push(task);    // 값이 리스크에 담긴다.
         console.log(taskList);
         render()
     
@@ -48,14 +57,25 @@ function render(){
     let resultHTML = '';
 
     for (let i = 0; i < taskList.length; i++){    // for -> 무엇을 계속 반복할것인지 생각! 
-
-        resultHTML +=   `<div class="task">
-                            <div>${taskList[i]}</div>
-                            <div>
-                                <button id="check-button">Check</button>
-                                <button id="delete-button">Delete</button>
-                            </div>
-                        </div>`;
+        
+        if(taskList[i].isComplete == true){
+            resultHTML += `<div class="task" style="background-color: antiquewhite;">
+            <div class="task-don">${taskList[i].taskContent}</div>
+                <div>
+                    <button id="check-button" onclick="check('${taskList[i].id}')">Check</button>
+                    <button id="delete-button" onclick="dell('${taskList[i].id}')">Delete</button>
+                </div>
+            </div>`;    
+            
+        }else{
+            resultHTML +=   `<div class="task">
+                                <div>${taskList[i].taskContent}</div>
+                                <div>
+                                    <button id="check-button" onclick="check('${taskList[i].id}')">Check</button>
+                                    <button id="delete-button" onclick="dell('${taskList[i].id}')">Delete</button>
+                                </div>
+                            </div>`;
+        }
 
     }
 
@@ -66,11 +86,39 @@ function render(){
 
 
 
-function check(){
+
+function check(id){
+    
+    for (let i = 0; i < taskList.length; i++){
+        if(taskList[i].id==id){
+            taskList[i].isComplete = !taskList[i].isComplete //true
+            break;
+        }
+    }
+    render()
+    console.log(taskList);
+}
+
+
+
+
+
+function dell(id){
+
+    for (let i = 0; i < taskList.length; i++){
+        if(taskList[i].id==id){
+            taskList.splice(i,1)       // .splice() : 원하는 위치에 요소를 추가하거나 삭제할 수 있다.
+            break;
+        }
+    }
+    render()
+    console.log(taskList);
 
 }
 
 
-function dell(){
-    
+
+
+function randomID(){
+    return ('000000000' + Math.random().toString(36).substr(2, 9)).slice(-9);
 }

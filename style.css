@@ -43,5 +43,6 @@ body{
     padding: 1em;
 }
 
-
-
+.task-don{
+    text-decoration: line-through; /* 밑줄 긋기 */
+}
