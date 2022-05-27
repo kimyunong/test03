@@ -58,11 +58,9 @@ function filter(event){   // event : 클릭을 했을때 모든 상황을 알려
                 filterList.push(taskList[i])
             }
         }
-
-        console.log(filterList);
-    // }else if(mode == "done"){
-
-    // }else{
+        taskList=filterList // filterList로 파일이 변경되었므로 all로 다시 돌아갔을때 값이 taskList로 돌아오지 않는다.
+        render()
+        // console.log(filterList);
 
     }
 
