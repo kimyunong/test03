@@ -17,8 +17,10 @@
 
 
 let userList = document.getElementById("user-list");  // getEl는 아이디 값만 가져올 수 있다 (*중요)
-// console.log(userList);
+let tabs = document.querySelectorAll(".task-taps div");  // querySelectorAll : 조건이 충족되는 모든것을 가져옴
+console.log(tabs);
 
+let mode = ''
 
 let plusButton = document.getElementById("plus-button");
 let checkButton = document.getElementById("check-button");
@@ -28,10 +30,43 @@ let taskList = []
 
 
 plusButton.addEventListener("click",plus);  // ("이벤트",펑션)
-checkButton.addEventListener("click",check);
-deleteButton.addEventListener("click",dell);
+// checkButton.addEventListener("click",check);
+// deleteButton.addEventListener("click",dell);
 
 
+
+for(let i=1; i<tabs.length; i++){
+
+    tabs[i].addEventListener("click",function(event){
+        filter(event);
+    });
+
+}
+
+function filter(event){   // event : 클릭을 했을때 모든 상황을 알려준다.
+
+    mode = event.target.id
+    let filterList=[]
+    
+    console.log("filter클릭",event.target.id);  // event.target = 어떤걸 클릭했는지 알고 싶을때
+
+    if(mode == "all"){
+        render()
+    }else if(mode == "ongoing"){
+        for(let i=0; i<taskList.length; i++){
+            if(taskList[i].isComplete == false){
+                filterList.push(taskList[i])
+            }
+        }
+
+        console.log(filterList);
+    // }else if(mode == "done"){
+
+    // }else{
+
+    }
+
+}
 
 
 
@@ -50,6 +85,9 @@ function plus(){
         render()
     
 }
+
+
+
 
 
 function render(){
@@ -89,7 +127,7 @@ function render(){
 
 function check(id){
     
-    for (let i = 0; i < taskList.length; i++){
+    for (let i = 0; i < taskList.length; i++){ 
         if(taskList[i].id==id){
             taskList[i].isComplete = !taskList[i].isComplete //true
             break;
@@ -122,3 +160,6 @@ function dell(id){
 function randomID(){
     return ('000000000' + Math.random().toString(36).substr(2, 9)).slice(-9);
 }
+
+
+
