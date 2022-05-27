@@ -48,6 +48,12 @@ function filter(event){   // event : 클릭을 했을때 모든 상황을 알려
 
     mode = event.target.id;
     filterList=[];
+
+    document.getElementById("under-line").style.width = event.target.offsetWidth + "px";
+
+    document.getElementById("under-line").style.bottom = event.target.offsetBottom + "px";
+
+    document.getElementById("under-line").style.left = event.target.offsetLeft + "px";
     
     console.log("filter",event.target.id);  // event.target = 어떤걸 클릭했는지 알고 싶을때
 
@@ -75,7 +81,7 @@ function filter(event){   // event : 클릭을 했을때 모든 상황을 알려
 
         
         render();
-        console.log(filterList);
+        console.log(filterList); 
 
     }
 

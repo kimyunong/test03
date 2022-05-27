@@ -30,12 +30,13 @@ body{
 }
 
 #under-line{
-    height: 4px; width: 80px;
+    height: 4px; width: 50px;
     background-color: palevioletred;
     position: absolute;
     left: 0px;
     top: 52px;
     padding: 0px;
+    transition: 0.4s;
 }
 
 .task{
