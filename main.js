@@ -20,7 +20,8 @@ let userList = document.getElementById("user-list");  // getEl는 아이디 값�
 let tabs = document.querySelectorAll(".task-taps div");  // querySelectorAll : 조건이 충족되는 모든것을 가져옴
 console.log(tabs);
 
-let mode = ''
+let mode = "all";
+let filterList=[]
 
 let plusButton = document.getElementById("plus-button");
 let checkButton = document.getElementById("check-button");
@@ -45,22 +46,36 @@ for(let i=1; i<tabs.length; i++){
 
 function filter(event){   // event : 클릭을 했을때 모든 상황을 알려준다.
 
-    mode = event.target.id
-    let filterList=[]
+    mode = event.target.id;
+    filterList=[];
     
-    console.log("filter클릭",event.target.id);  // event.target = 어떤걸 클릭했는지 알고 싶을때
+    console.log("filter",event.target.id);  // event.target = 어떤걸 클릭했는지 알고 싶을때
 
     if(mode == "all"){
-        render()
+        render();
+
+
     }else if(mode == "ongoing"){
         for(let i=0; i<taskList.length; i++){
             if(taskList[i].isComplete == false){
                 filterList.push(taskList[i])
             }
         }
-        taskList=filterList // filterList로 파일이 변경되었므로 all로 다시 돌아갔을때 값이 taskList로 돌아오지 않는다.
-        render()
-        // console.log(filterList);
+
+        // taskList=filterList // filterList로 파일이 변경되었므로 all로 다시 돌아갔을때 값이 taskList로 돌아오지 않는다.
+        render();
+        console.log(filterList);
+
+    }else if(mode == "done"){
+        for(let i=0; i<taskList.length; i++){
+            if(taskList[i].isComplete == true){
+                filterList.push(taskList[i])
+            }
+        }
+
+        
+        render();
+        console.log(filterList);
 
     }
 
@@ -90,25 +105,34 @@ function plus(){
 
 function render(){
 
+    let list=[]
+    if(mode == "all"){
+        list=taskList;
+    }else if(mode == "ongoing" || mode == "done"){
+        list=filterList;
+    }
+
+
+
     let resultHTML = '';
 
-    for (let i = 0; i < taskList.length; i++){    // for -> 무엇을 계속 반복할것인지 생각! 
+    for (let i = 0; i < list.length; i++){    // for -> 무엇을 계속 반복할것인지 생각! 
         
-        if(taskList[i].isComplete == true){
+        if(list[i].isComplete == true){
             resultHTML += `<div class="task" style="background-color: antiquewhite;">
-            <div class="task-don">${taskList[i].taskContent}</div>
+            <div class="task-don">${list[i].taskContent}</div>
                 <div>
-                    <button id="check-button" onclick="check('${taskList[i].id}')">Check</button>
-                    <button id="delete-button" onclick="dell('${taskList[i].id}')">Delete</button>
+                    <button id="check-button" onclick="check('${list[i].id}')">Check</button>
+                    <button id="delete-button" onclick="dell('${list[i].id}')">Delete</button>
                 </div>
             </div>`;    
             
         }else{
             resultHTML +=   `<div class="task">
-                                <div>${taskList[i].taskContent}</div>
+                                <div>${list[i].taskContent}</div>
                                 <div>
-                                    <button id="check-button" onclick="check('${taskList[i].id}')">Check</button>
-                                    <button id="delete-button" onclick="dell('${taskList[i].id}')">Delete</button>
+                                    <button id="check-button" onclick="check('${list[i].id}')">Check</button>
+                                    <button id="delete-button" onclick="dell('${list[i].id}')">Delete</button>
                                 </div>
                             </div>`;
         }
