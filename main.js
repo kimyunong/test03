@@ -31,6 +31,16 @@ let taskList = []
 
 
 plusButton.addEventListener("click",plus);  // ("이벤트",펑션)
+userList.addEventListener("keyup",function(event){
+    if (event.keyCode === 13){
+        plus(event);
+    }
+});
+
+
+
+
+
 // checkButton.addEventListener("click",check);
 // deleteButton.addEventListener("click",dell);
 
