@@ -31,6 +31,7 @@ let taskList = []
 
 
 plusButton.addEventListener("click",plus);  // ("이벤트",펑션)
+
 userList.addEventListener("keyup",function(event){
     if (event.keyCode === 13){
         plus(event);
@@ -66,6 +67,7 @@ function filter(event){   // event : 클릭을 했을때 모든 상황을 알려
     document.getElementById("under-line").style.left = event.target.offsetLeft + "px";
     
     console.log("filter",event.target.id);  // event.target = 어떤걸 클릭했는지 알고 싶을때
+
 
     if(mode == "all"){
         render();
@@ -181,16 +183,24 @@ function check(id){
 
 function dell(id){
 
+    let list=[]
+    if(mode == "all"){
+        list=taskList;
+    }else{
+        list=filterList;
+    }
+
     for (let i = 0; i < taskList.length; i++){
-        if(taskList[i].id==id){
-            taskList.splice(i,1)       // .splice() : 원하는 위치에 요소를 추가하거나 삭제할 수 있다.
+        if(list[i].id==id){
+            list.splice(i,1)       // .splice() : 원하는 위치에 요소를 추가하거나 삭제할 수 있다.
             break;
         }
     }
     render()
-    console.log(taskList);
+    console.log(list);
 
 }
+
 
 
 
@@ -198,6 +208,4 @@ function dell(id){
 function randomID(){
     return ('000000000' + Math.random().toString(36).substr(2, 9)).slice(-9);
 }
-
-
 
